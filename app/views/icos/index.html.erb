@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Webpage user homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>  
+
+  <style>
+
+    .bg-1 
+    { 
+      background-color: #ffbd80; /* Homepage */
+      padding: 300px 10px;
+      padding-left: 70px;
+      padding-right: 70px;
+    }
+
+    .bg-2 
+    { 
+      background-color: #FFFFFF; /* submit request page*/
+      color: #472A1A;
+      padding:80px 80px;
+      padding-left: 70px;
+      padding-right: 70px;
+    }
+
+    .bg-3 
+    { 
+      background-color: #FFFFFF; /* submit request page, reason*/
+      color: #472A1A;
+      padding: 20px 50px;
+      padding-left: 40px;
+      padding-right: 50px;
+    }
+
+    .bg-4 
+    { 
+      background-color: #ffe0cc; /*view ICO*/
+      color: #472A1A;
+      padding: 80px 80px;
+      padding-left: 70px;
+      padding-right: 70px;
+    }
+
+    .bg-6 
+    { 
+      background-color: #2d2d30; /*Footer*/
+      color: #472A1A;
+      padding: 20px 20px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+    .bg-7 
+    { 
+      padding: 10px 10px;
+      padding-left: 70px;
+      padding-right: 70px;
+    }
+
+    .bg-8 
+    { 
+      padding: 20px 10px; /*search bar */
+      padding-left: 150px;
+      padding-right: 150px;
+    }
+
+    .bg-9 
+    { 
+      background-color: #ffbd80; /*search bar result */
+      padding: 10px 10px; 
+      padding-left: 150px;
+      padding-right: 150px;
+    }
+
+
+   .nav-tabs li a 
+   {
+    color: #454140;
+    background-color: #ffffff;;
+    }
+
+   .navbar 
+   {
+    min-height:50px !important;
+    max-height:50px !important;
+    margin-bottom: 0;
+    background-color: #2d2d30;
+    border: 0;
+    font-size: 10px !important;
+    letter-spacing: 2px;
+    opacity:0.9;
+    }
+
+  </style>
+
+<body>
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div>
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#homepage">Home Page</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#view">View Fraud Cases</a></li>
+        <li><a href="#submit">Submit a Request</a></li>
+          <span class="caret"></span></a>
+      </ul>
+    </div>
+    </div>
+  </nav>
+
+<div  class="bg-1 text-center ">
+  <div class = "row">
+    <h3> Your trustworthy site to view reported fraud cases in Sinagpore </h3>
+    <p> For the community by the community </p>
+
+    <div class ="bg-8 text-center">
+      <div class >
+        <%= form_tag(icos_path, :method => "get", id: "search-form") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Searching for an ICO? Just Key in the ICO's name or website link here", :class =>"form-control"%>
+        <p></p>
+        <%= submit_tag "Search", :class => "btn btn-outline-dark", :name => nil %>
+        <%end %>
+      </div>
+    </div>
+  </div>
+
+  <div class = "bg-9" >
+    <% if @rsearch.blank? && params[:search] != nil %>
+      <h3><span class="label label-danger">No record <%= params[:search] %> found </span></h3>
+
+    <% elsif @rsearch.blank? == false && params[:search] != nil && params[:search] != "" %>
+
+    <h3><span class="label label-success"> Record found!  </span></h3>
+
+    <div class ="bg-7"></div> 
+
+    <table class ="table table-striped">
+      <thead>
+        <tr class = "warning">
+            <th scope="col" class ="text-center col-sm-1">Name</th>
+            <th scope="col" class ="text-center col-sm-1">Symbol</th>
+            <th scope="col" class ="text-center col-sm-4">Description</th>
+            <th scope="col" class ="text-center col-sm-2">Reason</th> 
+            <th scope="col" class ="text-center col-sm-1">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rsearch.each do |rsearch| %>
+          <% if rsearch.status == "Approved" %>
+          <tr>
+            <td scope="col" class ="text-center col-sm-1"><%= rsearch.ico_name %></td>
+            <td scope="col" class ="text-center col-sm-1"><%= rsearch.symbol %></td>
+            <td scope="col" class ="text-justify col-sm-4"><%= rsearch.description %></td>
+            <td scope="col" class ="text-justify col-sm-2"><%= rsearch.reason %></td>
+            <td scope="col" class ="text-center col-sm-1"><%= rsearch.ranking %></td>
+           <% end %>
+        <% end %>
+        </tr>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+</div>
+
+<div id="about" class="bg-2">
+  <div class = "row">
+    <h3> What is this website about? </h3>
+
+    <div class ="bg-7"></div>
+
+      <p> 
+        As cryptocurrency is steadily gaining popularity and public attention, many existing ICO available in the market may be created with impure motive.
+      
+        This website is created with the aim of providing a trustworthy platform to check for blacklisted ICO defined as a fraud by our admins. By doing so, it aims to reduce the number of victims falling for fraudulent ICO and regain public confidence in the unregulated cryptocurrency market.
+       </p>
+  
+    <div class ="bg-7"></div>
+
+    <h3> Our objectives : </h3>
+    <div class ="bg-7"></div>
+    <div class = "row">
+      <div class ="col-sm-5">
+        <h4> Increase transparency </h4>
+        <P>
+          By providing a place to check for fraudelent ICO, it helps users to identify if an ICO they are getting into is a fraud. 
+        
+          This website hopes to provide the necessary infomation to combat fraudulent ICO in the cryptocurrency market and helps to reduce the number of victims.
+        </p>
+      </div>
+
+      <div class =" col-sm-2"></div>
+  
+      
+      <div class =" col-sm-5">
+        <h4> Support from the community</h4>
+        <p> 
+          We understand the strength of an individual is limited. However, with the support of the community, we can do a lot more and help each other out. Hence, we would like to gather support from the community to make this website a success where public can view all the gathered suspicious ICO from all part of the world. 
+        </p>
+        <p>
+          Anyone can do a part by reporting any suspected ICO below.  
+        </p>
+        <%= link_to 'Submit a Request Today!', icos_path(anchor: 'submit')%></li>
+      </div>
+
+    </div>
+
+    <h3> How it work? </h3>
+    <div class ="bg-7  text-center">
+    <%= image_tag("flow.png") %>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div id="view" class="bg-4">
+  <h3> View approved ICO fraud </h3>
+
+  <div class ="bg-7"></div>
+
+  <div>
+      <table class ="table table-striped">
+        <thead>
+          <tr class = "bg-warning">
+            <th class ="text-center col-sm-1">Name</th>
+            <th class ="text-center col-sm-5">Decription</th>
+            <th class ="text-center col-sm-3">Justification</th>
+            <th class ="text-center col-sm-1">Rating</th>
+            <th class ="text-center col-sm-2">Website link</th>  
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @ico.each do |ico| %>
+            <% if ico.status == "Approved" %> 
+              <tr>
+              <td class ="text-center col-sm-1"><%= ico.ico_name %>, <%= ico.symbol %> </td>
+              <td class ="text-justify col-sm-5"><%= ico.description %></td>
+              <td class ="text-justify col-sm-3"><%= ico.reason %></td>
+              <td class ="text-justify text-center col-sm-1"><%= ico.ranking %></td>
+              <td class ="text-justify col-sm-2"><%= ico.website %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+  </div>
+
+</div>
+
+
+<div id="submit" class="bg-2">
+  <h3> Submit a request </h3>
+  <div class ="bg-7"></div>
+
+  <p id="notice"><%= notice %></p>
+
+  <div class = "row">
+
+    <%= simple_form_for @icos, :url => { :controller => 'icos', :action => 'create'} do |f| %>
+
+    <div class =" form-group col-sm-12">
+      <%= f.label :email, "Email address", :class => "col-sm-2" %>
+      <%= f.text_field :email, required: true, placeholder: 'Enter your email address', :class => "col-sm-6" %>
+    </div>
+
+    <div class = " form-group form-inline col-sm-12">
+
+      <%= f.label :ico_name, "ICO name", :class => "col-sm-2" %>
+      <%= f.text_field :ico_name, required: true, :class => "col-sm-2" %>
+
+      <%= f.label :symbol, "ICO symbol", :class => "col-sm-1" %>
+      <%= f.text_field :symbol, required: true, :class => "col-sm-2" %>
+
+    </div>
+
+    <div class = "form-group col-sm-12">
+      <%= f.label :country, "Country of origin", :class => "col-sm-2" %>
+      <%= f.country_select :country%>
+    </div>
+
+    <div class ="form-group col-sm-12">
+       <%= f.label :release_date, "Release date", :class => "col-sm-2" %>
+       <%= f.date_select :release_date, :class => "col-sm-2" %>
+     </div>
+
+    <div class =" form-group col-sm-12">
+      <%= f.label :webiste, "Website link", :class => "col-sm-2" %>
+      <%= f.text_field :website, required: true, placeholder: 'Paste in the main website link', :class => "col-sm-6" %>
+    </div>
+
+    <div class =" form-group col-sm-12">
+      <%= f.label :description, "Brief description of ICO", :class => "col-sm-2" %>
+      <%= f.text_area :description, required: true, placeholder: 'e.g what is the ICO mission and vission, what does it hope to achieve and field it operate in.', :size => "20x10", :class => "col-sm-6"%>
+    </div>
+    
+    <div class =" bg-3 form-group col-sm-12">
+      <%= f.input :reason, required: true , as: :radio_buttons,
+
+      collection: 
+      [
+        'Use case does not require blockchain',
+        'Empty repositories for open-source projects - lack of details how it works',
+        'Mining structure disproportionately favors development team',
+        'Anonymous team or with weak experience',
+        'Insufficient information on website/ white paper/ channels for communication',
+        'No clear road map or progress - lack of transparency',
+        'Unrealistic goals',
+      ] %>
+
+    </div>
+
+      <div class = "col-sm-12">
+        <%= f.submit "Submit Request", :class => "btn btn-outline-dark",:name => nil %>
+        <% end %>
+      </div>
+
+  </div>
+</div>
+
+</body>
+
+
+<footer class="container-fluid bg-6 text-center">
+</footer>
+
+</html>
+
+
+
+
+
+
+

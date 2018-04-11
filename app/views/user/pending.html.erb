@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>  
+  <style>
+
+   .bg-1 { 
+      background-color: #FFFFFF; /*Introduction page, main orange*/
+      color: #004C6B;
+      padding: 100px 10px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+   .navbar {
+    margin-bottom: 0;
+    background-color: #2d2d30;
+    border: 0;
+    font-size: 10px !important;
+    letter-spacing: 2px;
+    opacity:0.9;
+    }
+
+  </style>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <ul class="navbar-brand"><%= link_to "Homepage", user_adminpage_path %></ul>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Public domian", icos_path %></li>
+        <li><%= link_to "Pending request", user_pending_path %></li>
+        <li><%= link_to "Approved request", user_approved_path %></li>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+          <span class="caret"></span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<body>
+
+<div class="bg-1">
+  <h3> Pending request</h3>
+
+  <div>
+       <table class = "table table-hover table-dark">
+            <thead>
+             <tr>
+               <th class ="col-sm-4">ICO Name</th>
+               <th class ="col-sm-2">ICO Symbol</th>
+               <th class ="col-sm-4">Release date</th>
+               
+               <th colspan="3"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+              <% @ico.each do |ico| %>
+                <% @websites.each do |unique| %>
+                  <% if ico.website == unique && ico.status == "Pending" %>
+                  <tr>
+                    <td ><%= ico.ico_name %></td>
+                    <td ><%= ico.symbol %></td>
+                    <td ><%= ico.release_date %></td>
+                     <td><%= link_to 'Review', user_review_path(@ico, :id => ico.id)  %></td>       
+                  </tr>
+                 <% end %>
+              <% end %>
+            </tbody>
+            <% end %>
+      </table>  
+  </div>
+</div>
+</body>
+</html>
+     
+

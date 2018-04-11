@@ -1,0 +1,87 @@
+<%= form_with(model: ico, local: true) do |form| %>
+  <% if ico.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ico.errors.count, "error") %> prohibited this ico from being saved:</h2>
+
+      <ul>
+      <% ico.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :ico_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ico_name %>
+    <%= form.text_field :ico_name, id: :ico_ico_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :symbol %>
+    <%= form.text_field :symbol, id: :ico_symbol %>
+  </div>
+
+  <div class="field">
+    <%= form.label :website %>
+    <%= form.text_field :website, id: :ico_website %>
+  </div>
+
+  <div class="field">
+    <%= form.label :whitepaper %>
+    <%= form.text_field :whitepaper, id: :ico_whitepaper %>
+  </div>
+
+  <div class="field">
+    <%= form.label :country %>
+    <%= form.text_field :country, id: :ico_country %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :ico_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reason %>
+    <%= form.text_area :reason, id: :ico_reason %>
+  </div>
+
+  <div class="field">
+    <%= form.label :release_date %>
+    <%= form.date_select :release_date, id: :ico_release_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status, id: :ico_status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ranking %>
+    <%= form.text_field :ranking, id: :ico_ranking %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_submitted %>
+    <%= form.datetime_select :date_submitted, id: :ico_date_submitted %>
+  </div>
+
+  <div class="field">
+    <%= form.label :date_approved %>
+    <%= form.datetime_select :date_approved, id: :ico_date_approved %>
+  </div>
+
+  <div class="field">
+    <%= form.label :admin_approved %>
+    <%= form.text_field :admin_approved, id: :ico_admin_approved %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

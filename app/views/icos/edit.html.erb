@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit request page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>  
+  <style>
+   .container-fluid {
+    padding-top: 2px;
+    padding-bottom: 1px;
+    }
+
+   .bg-1 { 
+      background-color: #FFFFFF; 
+      color: #A70F01;
+      padding: 100px 20px;
+      padding-left: 100px;
+      padding-right: 100px;
+    }
+    .bg-2 { 
+      background-color: #FFFFFF; 
+      color: #A70F01;
+      padding: 20px 20px;
+      padding-left: 0px;
+      padding-right: 100px;
+    }
+  
+   .nav-tabs li a {
+    color: #454140;
+    background-color: #FFFFFF;
+
+    }
+
+   .navbar {
+    margin-bottom: 0;
+    background-color: #2d2d30;
+    border: 0;
+    font-size: 10px !important;
+    letter-spacing: 2px;
+    opacity:0.9;
+    }
+  </style>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <ul class="navbar-brand"><%= link_to "Homepage", user_adminpage_path %></ul>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Public domian", icos_path %></li>
+        <li><%= link_to "Pending request", user_pending_path %></li>
+        <li><%= link_to "Approved request", user_approved_path %></li>
+       
+          <span class="caret"></span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class = "bg-1">
+	<h2>Request Information</h2>
+  
+ <div class = "row bg-2">
+
+    <%= simple_form_for (@ico) do |f| %>
+
+    <div class =" form-group col-sm-12">
+      <%= f.label :email, "Email address", :class => "col-sm-2" %>
+      <%= f.text_field :email, :class => "col-sm-6" %>
+    </div>
+
+    <div class = " form-group form-inline col-sm-12">
+      <%= f.label :ico_name, "ICO name", :class => "col-sm-2" %>
+      <%= f.text_field :ico_name, :class => "col-sm-2" %>
+      <%= f.label :symbol, "ICO symbol", :class => "col-sm-1" %>
+      <%= f.text_field :symbol, :class => "col-sm-2" %>
+    </div>
+
+    <div class = "form-group col-sm-12">
+      <%= f.label :country, "Country of origin", :class => "col-sm-2" %>
+      <%= f.country_select :country%>
+    </div>
+
+    <div class ="form-group col-sm-12">
+       <%= f.label :release_date, "Release date", :class => "col-sm-2" %>
+       <%= f.date_select :release_date, :class => "col-sm-2" %>
+     </div>
+
+    <div class =" form-group col-sm-12">
+      <%= f.label :webiste, "Webiste link", :class => "col-sm-2" %>
+      <%= f.text_field :website, placeholder: 'Paste in the main website link', :class => "col-sm-6" %>
+    </div>
+
+    <div class =" form-group col-sm-12">
+      <%= f.label :description, "Brief description of ICO", :class => "col-sm-2" %>
+      <%= f.text_area :description, placeholder: 'e.g what is the ICO mission and vission, what does it hope to achieve and field it operate in.', :size => "20x6", :class => "col-sm-6" %>
+    </div>
+    
+    <div class =" form-group col-sm-12">
+      <%= f.label :reason, "Reason for rejection", :class => "col-sm-2" %>
+      <%= f.text_area :reason, :class => "col-sm-6",:size => "10x6" %>
+    </div>
+
+    <div class="field form-group col-sm-12">
+      <%= f.label :status, :class => "col-sm-2" %>
+      <%= @ico.status %>    
+    </div>
+
+    <div class="field form-group col-sm-12">
+      <%= f.label :ranking, :class => "col-sm-2" %>
+      <div class = "col-sm-4">
+        <p><strong>Rate ICO according to:</strong></p>
+        <p> 1. Team creditability (3) - This look at the team composition, the member's experience in the relevant field and track's record. 
+        </p>
+        <p> 2. Outreach (3) - This look at the ICO's team established channel of communication, the marketing efforts and how active they are in the market. </p>
+        <p> 3. ICO demoraphic (4) - This look at the ICO's fundemental purpose, its mission and vision. As well as how practical the ICO is.
+        </p>
+        <p> Provide the rating out of 10 according to above criteria , where 1 is the least risky and 10 is the most risky </p>
+
+      </div>
+
+      <%= f.text_field :ranking, :class => "col-sm-2" %>
+    </div>
+
+    <div class="field form-group col-sm-12">
+      <%= f.label :date_submitted, :class => "col-sm-2" %>
+      <%= @ico.date_submitted  %>
+    </div>
+
+    <div class="field form-group col-sm-12">
+      <%= f.label :date_approved, :class => "col-sm-2" %>
+      <%= @ico.date_approved %>
+    </div>
+
+    <div class="field form-group col-sm-12">
+      <%= f.label :admin_approved, :class => "col-sm-2" %>
+      <%= @ico.admin_approved %>
+    </div>
+
+    <div class = "col-sm-12">
+      <%= f.submit "Update Request", :class => "btn btn-outline-dark",:name => nil %>
+    </div>
+
+    <% end %>
+</div>
+</div>
+</html>
+
+
+
+

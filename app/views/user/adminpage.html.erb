@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>  
+  <style>
+
+   .bg-1 { 
+      background-color: #FFFFFF; /*Introduction page, main orange*/
+      color: #004C6B;
+      padding: 100px 10px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+    .bg-7 { 
+      padding: 10px 10px;
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+   .navbar {
+    margin-bottom: 0;
+    background-color: #2d2d30;
+    border: 0;
+    font-size: 10px !important;
+    letter-spacing: 2px;
+    opacity:0.9;
+    }
+
+  </style>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      
+      <ul class="navbar-brand"><%= link_to "Homepage", user_adminpage_path %></ul>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Public domian", icos_path %></li>
+        <li><%= link_to "Pending request", user_pending_path %></li>
+        <li><%= link_to "Approved request", user_approved_path %></li>
+        <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+  
+          <span class="caret"></span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<body>
+
+<div class="container-fluid bg-1">
+  <h3> Admin Page</h3>
+
+  <div>
+      <div>
+        <%= form_tag(user_adminpage_path, :method => "get", id: "search-form") do %>
+         <%= text_field_tag :search, params[:search], placeholder: "Search for an ICO? Enter ICO's name or website link", :class =>"form-control" %>
+         <p></p>
+         <%= submit_tag "Search", :class => "btn btn-outline-dark", :name => nil %>
+         <%end %>
+      </div>
+  </div>
+
+
+  <% if @rsearch.blank? && params[:search] != nil %>
+      <h3><span class="label label-danger">No record <%= params[:search] %> found </span></h3>
+  <% elsif @rsearch.blank? == false && params[:search] != nil && params[:search] != "" %>
+
+    <h3><span class="label label-success"> Record found below are the informations </span></h3>
+    <div class ="bg-7"></div> 
+
+    <table class ="table table-striped">
+      <thead>
+        <tr class = "warning">
+            <th scope="col" class ="text-center col-sm-1">Name</th>
+            <th scope="col" class ="text-center col-sm-1">Symbol</th>
+            <th scope="col" class ="text-center col-sm-1">Country</th>
+            <th scope="col" class ="text-center col-sm-3">Description</th>
+            <th scope="col" class ="text-center col-sm-3">Reason</th> 
+            <th scope="col" class ="text-center col-sm-1">Rating</th>
+            <th scope="col" class ="text-center col-sm-2">Weblink</th> 
+            <th scope="col" class ="text-center col-sm-1">Status</th>             
+          </tr>
+        </thead>
+        <tbody>
+          <% @rsearch.each do |request| %>
+              <tr>
+              <td scope="col" class ="text-center col-sm-1"><%= request.ico_name %></td>
+              <td scope="col" class ="text-center col-sm-1"><%= request.symbol %></td>
+              <td scope="col" class ="text-center col-sm-1"><%= request.country %></td>
+              <td scope="col" class ="text-center col-sm-3"><%= request.description %></td>
+              <td scope="col" class ="text-center col-sm-3"><%= request.reason %></td>
+              <td scope="col" class ="text-center col-sm-1"><%= request.ranking %></td>
+              <td scope="col" class ="text-center col-sm-2"><%= request.website %></td>
+              <td scope="col" class ="text-center col-sm-1"><%= request.status %></td>
+        <% end %>
+          </tr>
+        </tbody>
+        </table>
+        <%end %>
+</div>
+
+
+
+</div>
+
+  </div>
+</body>
+</html>
+
